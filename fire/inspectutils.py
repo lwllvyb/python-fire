@@ -14,16 +14,15 @@
 
 """Inspection utility functions for Python Fire."""
 
+import asyncio
 import inspect
 import sys
 import types
 
 from fire import docstrings
 
-import asyncio  # pylint: disable=import-error,g-import-not-at-top  # pytype: disable=import-error
 
-
-class FullArgSpec(object):
+class FullArgSpec:
   """The arguments of a function, as in Python 3's inspect.FullArgSpec."""
 
   def __init__(self, args=None, varargs=None, varkw=None, defaults=None,
@@ -230,7 +229,7 @@ def GetFileAndLine(component):
   try:
     unused_code, lineindex = inspect.findsource(component)
     lineno = lineindex + 1
-  except (IOError, IndexError):
+  except (OSError, IndexError):
     lineno = None
 
   return filename, lineno
@@ -269,7 +268,7 @@ def Info(component):
   try:
     unused_code, lineindex = inspect.findsource(component)
     info['line'] = lineindex + 1
-  except (TypeError, IOError):
+  except (TypeError, OSError):
     info['line'] = None
 
   if 'docstring' in info:

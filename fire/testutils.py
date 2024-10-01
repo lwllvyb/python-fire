@@ -20,11 +20,10 @@ import os
 import re
 import sys
 import unittest
+from unittest import mock
 
 from fire import core
 from fire import trace
-
-import mock
 
 
 class BaseTestCase(unittest.TestCase):
@@ -67,9 +66,6 @@ class BaseTestCase(unittest.TestCase):
         if not re.search(regexp, value, re.DOTALL | re.MULTILINE):
           raise AssertionError('%s: Expected %r to match %r' %
                                (name, value, regexp))
-
-  def assertRaisesRegex(self, *args, **kwargs):  # pylint: disable=arguments-differ
-    return super(BaseTestCase, self).assertRaisesRegex(*args, **kwargs)  # pylint: disable=no-member
 
   @contextlib.contextmanager
   def assertRaisesFireExit(self, code, regexp='.*'):
